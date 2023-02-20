@@ -21,7 +21,7 @@ def movie_dao():
     movie_dao.get_all = MagicMock(return_value=[m1, m2, m3])
     movie_dao.create = MagicMock(return_value=m1)
     movie_dao.delete = MagicMock()
-    movie_dao.update = MagicMock(return_value=m3)
+    movie_dao.update = MagicMock(return_value=m1)
 
     return movie_dao
 
@@ -41,6 +41,7 @@ class TestMovieService:
         movies = self.movie_service.get_all()
 
         assert len(movies) > 0
+        assert len(movies) == 3
 
     def test_create(self):
         movie_d = {
@@ -93,4 +94,6 @@ class TestMovieService:
             'director_id': 1
         }
 
-        self.movie_service.update(movie_d)
+        movie = self.movie_service.update(movie_d)
+
+        assert movie_d.get('id') == movie.id

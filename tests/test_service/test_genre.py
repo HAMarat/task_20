@@ -18,7 +18,7 @@ def genre_dao():
     genre_dao.get_all = MagicMock(return_value=[g1, g2, g3])
     genre_dao.create = MagicMock(return_value=g1)
     genre_dao.delete = MagicMock()
-    genre_dao.update = MagicMock(return_value=g3)
+    genre_dao.update = MagicMock(return_value=g1)
 
     return genre_dao
 
@@ -38,6 +38,7 @@ class TestGenreService:
         genres = self.genre_service.get_all()
 
         assert len(genres) > 0
+        assert len(genres) == 3
 
     def test_create(self):
         genre_d = {
@@ -71,4 +72,6 @@ class TestGenreService:
             'name': 'First',
         }
 
-        self.genre_service.update(genre_d)
+        genre = self.genre_service.update(genre_d)
+
+        assert genre_d.get('id') == genre.id

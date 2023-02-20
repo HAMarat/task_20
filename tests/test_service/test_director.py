@@ -38,6 +38,7 @@ class TestDirectorService:
         directors = self.director_service.get_all()
 
         assert len(directors) > 0
+        assert len(directors) == 3
 
     def test_create(self):
         director_d = {
@@ -68,7 +69,10 @@ class TestDirectorService:
     def test_update(self):
         director_d = {
             'id': 1,
-            'name': 'First',
+            'name': 'First'
         }
 
         self.director_service.update(director_d)
+        director = self.director_service.get_one(1)
+
+        assert director_d.get('id') == director.id
